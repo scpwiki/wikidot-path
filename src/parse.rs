@@ -25,9 +25,22 @@ lazy_static! {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize))]
 pub struct Request<'a> {
+    /// The slug, or URL identifier of a page.
+    ///
+    /// For a page like "SCP-1000" this will be `scp-1000`.
     pub slug: &'a str,
+
+    /// A list of categories this page is in, in order of appearance.
+    ///
+    /// An empty list indicates that no categories were specified,
+    /// that is, no colons were present in the path.
+    /// By convention any pages like this are considered to be in
+    /// the `_default` category.
     pub categories: Vec<&'a str>,
-    pub arguments: HashMap<&'a str, Value<'a>>,
+
+    /// What arguments were passed into the request, as a mapping of
+    /// key to value.
+    pub arguments: HashMap<&'a str, ArgumentValue<'a>>,
 }
 
 impl<'a> Request<'a> {
@@ -80,7 +93,7 @@ impl<'a> Request<'a> {
                     continue;
                 }
 
-                let value = Value::from(parts.next());
+                let value = ArgumentValue::from(parts.next());
                 arguments.insert(key, value);
             }
 
@@ -95,11 +108,21 @@ impl<'a> Request<'a> {
     }
 }
 
+/// A type for possible values an argument key could have.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Value<'a> {
+pub enum ArgumentValue<'a> {
+    /// A string argument value.
     String(&'a str),
+
+    /// An integer argument value.
     Integer(i32),
+
+    /// A boolean argument value.
     Boolean(bool),
+
+    /// No value explicitly passed for this argument.
+    ///
+    /// For a "flag" type key, this is the same as `true`.
     Null,
 }
 
@@ -107,9 +130,9 @@ cfg_if! {
     if #[cfg(feature = "serde-derive")] {
         use serde::{Serialize, Serializer};
 
-        impl<'a> Serialize for Value<'a> {
+        impl<'a> Serialize for ArgumentValue<'a> {
             fn serialize<S: Serializer>(&self, serializer: S) -> Result<S::Ok, S::Error> {
-                use self::Value::*;
+                use self::ArgumentValue::*;
 
                 match self {
                     String(value) => serializer.serialize_str(value),
@@ -122,47 +145,47 @@ cfg_if! {
     }
 }
 
-impl<'a> From<Option<&'a str>> for Value<'a> {
+impl<'a> From<Option<&'a str>> for ArgumentValue<'a> {
     #[inline]
     fn from(value: Option<&'a str>) -> Self {
         match value {
-            Some(value) => Value::from(value),
-            None => Value::Null,
+            Some(value) => ArgumentValue::from(value),
+            None => ArgumentValue::Null,
         }
     }
 }
 
-impl<'a> From<&'a str> for Value<'a> {
+impl<'a> From<&'a str> for ArgumentValue<'a> {
     fn from(value: &'a str) -> Self {
         match value {
-            "" => Value::Null,
-            "true" => Value::Boolean(true),
-            "false" => Value::Boolean(false),
+            "" => ArgumentValue::Null,
+            "true" => ArgumentValue::Boolean(true),
+            "false" => ArgumentValue::Boolean(false),
             _ => match value.parse::<i32>() {
-                Ok(int) => Value::Integer(int),
-                Err(_) => Value::String(value),
+                Ok(int) => ArgumentValue::Integer(int),
+                Err(_) => ArgumentValue::String(value),
             },
         }
     }
 }
 
-impl From<bool> for Value<'_> {
+impl From<bool> for ArgumentValue<'_> {
     #[inline]
     fn from(value: bool) -> Self {
-        Value::Boolean(value)
+        ArgumentValue::Boolean(value)
     }
 }
 
-impl From<i32> for Value<'_> {
+impl From<i32> for ArgumentValue<'_> {
     #[inline]
     fn from(value: i32) -> Self {
-        Value::Integer(value)
+        ArgumentValue::Integer(value)
     }
 }
 
-impl From<()> for Value<'_> {
+impl From<()> for ArgumentValue<'_> {
     #[inline]
     fn from(_: ()) -> Self {
-        Value::Null
+        ArgumentValue::Null
     }
 }
