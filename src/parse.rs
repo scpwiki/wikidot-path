@@ -109,6 +109,11 @@ impl<'a> Request<'a> {
 }
 
 /// A type for possible values an argument key could have.
+///
+/// Those consuming values should attempt to be flexible when
+/// accepting values. For instance a truthy key should accept
+/// `1`, `true`, and `Null` (as it indicates that they key is
+/// present at all) as meaning "true".
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum ArgumentValue<'a> {
     /// A string argument value.
@@ -121,8 +126,6 @@ pub enum ArgumentValue<'a> {
     Boolean(bool),
 
     /// No value explicitly passed for this argument.
-    ///
-    /// For a "flag" type key, this is the same as `true`.
     Null,
 }
 
