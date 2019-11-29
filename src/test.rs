@@ -11,4 +11,28 @@
  *
  */
 
-// TODO
+use crate::prelude::*;
+
+#[test]
+fn test_redirect() {
+    macro_rules! check {
+        ($input:expr, $expected:expr) => {{
+            let path = redirect($input);
+            let expected: Option<&str> = $expected;
+            let expected = expected.map(|s| str!(s));
+            assert_eq!(path, expected, "Redirection didn't match expected");
+        }};
+    }
+
+    check!("", None);
+    check!("Big Cheese Horace", Some("big-cheese-horace"));
+    check!("Tufto's Proposal", Some("tufto-s-proposal"));
+    check!("SCP-1000", Some("scp-1000"));
+    check!("scp-1000", None);
+
+    check!("/", None);
+    check!("/Big Cheese Horace", Some("/big-cheese-horace"));
+    check!("/Tufto's Proposal", Some("/tufto-s-proposal"));
+    check!("/SCP-1000", Some("/scp-1000"));
+    check!("/scp-1000", None);
+}

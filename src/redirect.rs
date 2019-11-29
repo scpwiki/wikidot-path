@@ -20,6 +20,7 @@ use wikidot_normalize::{is_normal, normalize_decode};
 pub fn redirect<S: Into<String>>(path: S) -> Option<String> {
     let mut path = path.into();
 
+    debug!("Checking path {} for redirection", &path);
     if is_normal(&path, true) {
         None
     } else {
