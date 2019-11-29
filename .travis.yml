@@ -46,6 +46,8 @@ jobs:
       script:
         - cargo build --verbose
         - cargo test --verbose -- --nocapture
+        - cargo build --verbose --features serde-derive
+        - cargo test --verbose --features serde-derive -- --nocapture
 
 notifications:
   email:

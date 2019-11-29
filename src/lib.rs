@@ -11,7 +11,8 @@
  *
  */
 
-#![deny(missing_debug_implementations, missing_docs)]
+#![deny(missing_debug_implementations)]
+#![warn(missing_docs)]
 
 //! A library to provide Wikidot-compatible path parsing.
 //!
@@ -24,11 +25,36 @@
 //! crate for more information.
 
 #[macro_use]
+extern crate cfg_if;
+
+#[macro_use]
+extern crate lazy_static;
+
+#[macro_use]
 extern crate log;
+
+#[macro_use]
+extern crate maplit;
 extern crate wikidot_normalize;
 
+#[cfg(feature = "serde-derive")]
+extern crate serde;
+
 mod parse;
-mod request;
+mod redirect;
 
 #[cfg(test)]
 mod test;
+
+pub use self::parse::{Request, Value};
+//pub use self::redirect::redirect;
+
+/// A "prelude" for consumers of the `wikidot-path` crate.
+///
+/// This prelude includes all exports from the crate, and is provided
+/// for convenience without requiring programs to do a glob import of
+/// the whole crate.
+pub mod prelude {
+    pub use super::parse::{Request, Value};
+    //pub use super::redirect::redirect;
+}
