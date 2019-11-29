@@ -11,4 +11,19 @@
  *
  */
 
-// TODO
+use wikidot_normalize::{is_normal, normalize_decode};
+
+/// Determines if a request with the given path should be redirected or not.
+///
+/// This is to allow consumers in a web router to redirect requests which are
+/// not in Wikidot normal form.
+pub fn redirect<S: Into<String>>(path: S) -> Option<String> {
+    let mut path = path.into();
+
+    if is_normal(&path, true) {
+        None
+    } else {
+        normalize_decode(&mut path);
+        Some(path)
+    }
+}

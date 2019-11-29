@@ -47,7 +47,7 @@ mod redirect;
 mod test;
 
 pub use self::parse::{Request, Value};
-//pub use self::redirect::redirect;
+pub use self::redirect::redirect;
 
 /// A "prelude" for consumers of the `wikidot-path` crate.
 ///
@@ -56,5 +56,5 @@ pub use self::parse::{Request, Value};
 /// the whole crate.
 pub mod prelude {
     pub use super::parse::{Request, Value};
-    //pub use super::redirect::redirect;
+    pub use super::redirect::redirect;
 }
