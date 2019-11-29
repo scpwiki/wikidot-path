@@ -28,6 +28,7 @@ extern crate log;
 extern crate wikidot_normalize;
 
 mod parse;
+mod request;
 
 #[cfg(test)]
 mod test;

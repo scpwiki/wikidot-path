@@ -1,11 +1,23 @@
 [package]
 name = "wikidot-path"
-version = "0.1.0"
-authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
-edition = "2018"
+description = "Simple library to provide Wikidot-compatible path parsing"
+repository = "https://github.com/Nu-SCPTheme/wikidot-path"
+readme = "README.md"
+license = "MIT"
+keywords = ["wikidot", "path", "parsing"]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+version = "0.0.1"
+authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
+edition = "2018" # this refers to the Cargo.toml version
+
+[badges]
+travis-ci = { repository = "Nu-SCPTheme/wikidot-path" }
+
+[features]
+default = []
+serde-derive = ["serde"]
 
 [dependencies]
 log = "0.4"
+serde = { version = "1", features = ["derive"], optional = true }
 wikidot-normalize = "0.3"

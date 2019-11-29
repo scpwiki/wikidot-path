@@ -11,11 +11,10 @@ However this also extends its usage in a few minor ways. For instance, options l
 
 Additionally URL normalization is performed. See the [`wikidot-normalize`](https://crates.io/crates/wikidot-normalize) crate for more information.
 
-An example would be how the URL `http://scp-wiki.net/component:image-block/noredirect/true/tags/template` is parsed:
+An example would be how the path `/component:image-block/noredirect/true/tags/template` is parsed:
 
 ```rust
 Request {
-    host: Option("scp-wiki.net"),
     slug: "image-block",
     categories: vec!["component"],
     arguments: hashmap! {
