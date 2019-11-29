@@ -42,10 +42,7 @@ fn test_request() {
     macro_rules! check {
         ($path:expr, $expected:expr) => {{
             let page_req = Request::parse($path);
-            assert_eq!(
-                page_req, $expected,
-                "Parsed Request doesn't match expected"
-            );
+            assert_eq!(page_req, $expected, "Parsed Request doesn't match expected");
         }};
     }
 

@@ -17,7 +17,7 @@ lazy_static! {
     static ref EMPTY_REQUEST: Request<'static> = Request {
         slug: "",
         categories: vec![],
-        arguments: hashmap!{},
+        arguments: hashmap! {},
     };
 }
 
