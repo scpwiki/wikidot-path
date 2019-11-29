@@ -44,14 +44,14 @@ extern crate str_macro;
 #[cfg(feature = "serde-derive")]
 extern crate serde;
 
-mod parse;
 mod redirect;
+mod request;
 
 #[cfg(test)]
 mod test;
 
-pub use self::parse::{ArgumentValue, Request};
 pub use self::redirect::redirect;
+pub use self::request::{ArgumentValue, Request};
 
 /// A "prelude" for consumers of the `wikidot-path` crate.
 ///
@@ -59,6 +59,6 @@ pub use self::redirect::redirect;
 /// for convenience without requiring programs to do a glob import of
 /// the whole crate.
 pub mod prelude {
-    pub use super::parse::{ArgumentValue, Request};
     pub use super::redirect::redirect;
+    pub use super::request::{ArgumentValue, Request};
 }

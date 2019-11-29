@@ -1,5 +1,5 @@
 /*
- * parse.rs
+ * request.rs
  *
  * wikidot-path - Library to parse Wikidot-like paths.
  * Copyright (c) 2019 Ammon Smith
