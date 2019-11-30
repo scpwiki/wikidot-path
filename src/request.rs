@@ -46,8 +46,6 @@ pub struct Request<'a> {
 impl<'a> Request<'a> {
     /// Parses a path to extract the slug, categories, and arguments.
     /// Makes a best-effort match if the path is not in normal form.
-    ///
-    /// Returns `None` if invalid.
     pub fn parse(mut path: &'a str) -> Self {
         if path.starts_with('/') {
             trace!("Removing leading slash");
