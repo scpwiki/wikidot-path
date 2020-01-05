@@ -23,7 +23,7 @@ lazy_static = "1"
 log = "0.4"
 maplit = "1"
 serde = { version = "1", features = ["derive"], optional = true }
-wikidot-normalize = "0.3"
+wikidot-normalize = "0.4"
 
 [dev-dependencies]
 str-macro = "0.1"
