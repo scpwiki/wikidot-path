@@ -11,7 +11,7 @@ authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
 
 [badges]
-travis-ci = { repository = "Nu-SCPTheme/wikidot-path" }
+travis-ci = { repository = "Nu-SCPTheme/wikidot-path", branch = "master" }
 
 [features]
 default = []
