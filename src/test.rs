@@ -30,6 +30,10 @@ fn test_redirect() {
     check!("SCP-1000", Some("scp-1000"));
     check!("scp-1000/", Some("scp-1000"));
     check!("scp-1000", None);
+    check!("COMPONENT:image-block", Some("component:image-block"));
+    check!("component:image-block", None);
+    check!("_default:scp-1000", Some("scp-1000"));
+    check!("_default:SCP 1000", Some("scp-1000"));
 
     check!("/", None);
     check!("/Big Cheese Horace", Some("/big-cheese-horace"));
@@ -37,6 +41,10 @@ fn test_redirect() {
     check!("/SCP-1000", Some("/scp-1000"));
     check!("/scp-1000/", Some("/scp-1000"));
     check!("/scp-1000", None);
+    check!("/COMPONENT:image-block", Some("/component:image-block"));
+    check!("/component:image-block", None);
+    check!("/_default:scp-1000", Some("/scp-1000"));
+    check!("/_default:SCP 1000", Some("/scp-1000"));
 }
 
 #[test]
