@@ -35,7 +35,7 @@ extern crate log;
 
 #[macro_use]
 extern crate maplit;
-extern crate wikidot_normalize;
+extern crate regex;
 
 #[cfg(test)]
 #[macro_use]
@@ -43,6 +43,7 @@ extern crate str_macro;
 
 #[cfg(feature = "serde-derive")]
 extern crate serde;
+extern crate wikidot_normalize;
 
 mod redirect;
 mod request;

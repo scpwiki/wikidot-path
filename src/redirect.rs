@@ -11,7 +11,12 @@
  *
  */
 
+use regex::Regex;
 use wikidot_normalize::{is_normal, normalize_decode};
+
+lazy_static! {
+    static ref DEFAULT_CATEGORY_REGEX: Regex = Regex::new(r"\b_default:").unwrap();
+}
 
 /// Determines if a request with the given path should be redirected or not.
 ///
@@ -22,17 +27,31 @@ use wikidot_normalize::{is_normal, normalize_decode};
 /// redirected to simply `page`.
 pub fn redirect<S: Into<String>>(path: S) -> Option<String> {
     let mut path = path.into();
+    let mut modified = false;
 
-    debug!("Checking path {} for redirection", &path);
-    if is_normal(&path, true) {
-        None
-    } else {
+    debug!("Checking path {}", path);
+
+    // Normalize path
+    if !is_normal(&path, true) {
         normalize_decode(&mut path);
+        modified = true;
+    }
 
-        if path.starts_with("_default") {
-            path.replace_range(..9, "");
-        }
+    // Remove _default category
+    if let Some(mtch) = DEFAULT_CATEGORY_REGEX.find(&path) {
+        let range = mtch.start()..mtch.end();
+
+        path.replace_range(range, "");
+        modified = true;
+    }
+
+    if modified {
+        debug!("Redirecting path to {}", path);
 
         Some(path)
+    } else {
+        trace!("No redirection needed");
+
+        None
     }
 }
