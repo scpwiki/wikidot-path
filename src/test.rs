@@ -28,12 +28,14 @@ fn test_redirect() {
     check!("Big Cheese Horace", Some("big-cheese-horace"));
     check!("Tufto's Proposal", Some("tufto-s-proposal"));
     check!("SCP-1000", Some("scp-1000"));
+    check!("scp-1000/", Some("scp-1000"));
     check!("scp-1000", None);
 
     check!("/", None);
     check!("/Big Cheese Horace", Some("/big-cheese-horace"));
     check!("/Tufto's Proposal", Some("/tufto-s-proposal"));
     check!("/SCP-1000", Some("/scp-1000"));
+    check!("/scp-1000/", Some("/scp-1000"));
     check!("/scp-1000", None);
 }
 
