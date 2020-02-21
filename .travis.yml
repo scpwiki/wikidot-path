@@ -24,15 +24,15 @@ script:
   - .travis/clippy.sh check
   # Run build
   - .travis/banner.sh build
-  - cargo build --verbose --release
-  - cargo test --verbose --release -- --nocapture
+  - cargo build --release
+  - cargo test --release -- --nocapture
   # Run build with serde-derive
   - .travis/banner.sh build-serde-derive
-  - cargo build --verbose --release --features serde-derive
-  - cargo test --verbose --release --features serde-derive -- --nocapture
+  - cargo build --release --features serde-derive
+  - cargo test --release --features serde-derive -- --nocapture
   # Build documentation
   - .travis/banner.sh docs
-  - cargo doc --verbose --no-deps
+  - cargo doc --no-deps
 
 jobs:
   allow_failures:
