@@ -38,8 +38,8 @@ pub struct Request<'a> {
     /// the `_default` category.
     pub categories: Vec<&'a str>,
 
-    /// What arguments were passed into the request, as a mapping of
-    /// key to value.
+    /// What arguments were passed into the request.
+    /// A mapping of key to value.
     pub arguments: HashMap<&'a str, ArgumentValue<'a>>,
 }
 
