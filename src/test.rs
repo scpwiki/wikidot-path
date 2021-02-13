@@ -16,7 +16,7 @@ use crate::prelude::*;
 #[test]
 fn test_redirect() {
     macro_rules! check {
-        ($input:expr, $expected:expr) => {{
+        ($input:expr, $expected:expr $(,)?) => {{
             let actual = redirect($input);
             let expected: Option<&str> = $expected;
             let expected = expected.map(String::from);
@@ -68,7 +68,7 @@ fn test_redirect() {
 #[test]
 fn test_request() {
     macro_rules! check {
-        ($path:expr, $expected:expr) => {{
+        ($path:expr, $expected:expr $(,)?) => {{
             let actual = Request::parse($path);
             assert_eq!(actual, $expected, "Parsed Request doesn't match expected");
         }};
@@ -80,7 +80,7 @@ fn test_request() {
             slug: "scp-1000",
             category: "_default",
             arguments: hashmap! {},
-        }
+        },
     );
     check!(
         "scp-1000/edit",
@@ -88,7 +88,7 @@ fn test_request() {
             slug: "scp-1000",
             category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "scp-1000/edit/1",
@@ -96,7 +96,7 @@ fn test_request() {
             slug: "scp-1000",
             category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::from(1) },
-        }
+        },
     );
     check!(
         "scp-1000/edit/true",
@@ -104,7 +104,7 @@ fn test_request() {
             slug: "scp-1000",
             category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "component:image-block",
@@ -112,7 +112,7 @@ fn test_request() {
             slug: "image-block",
             category: "component",
             arguments: hashmap! {},
-        }
+        },
     );
     check!(
         "deleted:component:image-block",
@@ -120,7 +120,7 @@ fn test_request() {
             slug: "component:image-block",
             category: "deleted",
             arguments: hashmap! {},
-        }
+        },
     );
     check!(
         "fragment:scp-4447-1",
@@ -128,7 +128,7 @@ fn test_request() {
             slug: "scp-4447-1",
             category: "fragment",
             arguments: hashmap! {},
-        }
+        },
     );
     check!(
         "fragment:scp-4447-1/discuss",
@@ -136,7 +136,7 @@ fn test_request() {
             slug: "scp-4447-1",
             category: "fragment",
             arguments: hashmap! { "discuss" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "fragment:scp-4447-1/discuss/true",
@@ -144,7 +144,7 @@ fn test_request() {
             slug: "scp-4447-1",
             category: "fragment",
             arguments: hashmap! { "discuss" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "scp-series-5",
@@ -152,7 +152,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! {},
-        }
+        },
     );
     check!(
         "scp-series-5/norender",
@@ -160,7 +160,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/1",
@@ -168,7 +168,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1) },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/true",
@@ -176,7 +176,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/true/noredirect",
@@ -184,7 +184,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/1/noredirect",
@@ -192,7 +192,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/true/noredirect",
@@ -200,7 +200,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/true/noredirect/true",
@@ -208,7 +208,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/1/noredirect/1",
@@ -216,7 +216,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::from(1) },
-        }
+        },
     );
     check!(
         "scp-series-5/norender/true/noredirect/true",
@@ -224,7 +224,7 @@ fn test_request() {
             slug: "scp-series-5",
             category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "aaa:page/true/false/true/false/edit",
@@ -232,7 +232,7 @@ fn test_request() {
             slug: "page",
             category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::Null },
-        }
+        },
     );
     check!(
         "aaa:page/true/false/true/false/edit/1",
@@ -240,7 +240,7 @@ fn test_request() {
             slug: "page",
             category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::from(1) },
-        }
+        },
     );
     check!(
         "aaa:page/true/false/true/false/edit/true",
@@ -248,7 +248,7 @@ fn test_request() {
             slug: "page",
             category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::from(true) },
-        }
+        },
     );
     check!(
         "aaa:bbb:page/noredirect/false/norender/0/true/false",
@@ -256,7 +256,7 @@ fn test_request() {
             slug: "bbb:page",
             category: "aaa",
             arguments: hashmap! { "noredirect" => ArgumentValue::from(false), "norender" => ArgumentValue::from(0) },
-        }
+        },
     );
     check!(
         "aaa:bbb:page/tags/tale/title/A Story/edit",
@@ -268,6 +268,6 @@ fn test_request() {
                 "title" => ArgumentValue::from("A Story"),
                 "edit" => ArgumentValue::Null,
             },
-        }
+        },
     );
 }
