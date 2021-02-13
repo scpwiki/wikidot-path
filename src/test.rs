@@ -24,16 +24,15 @@ fn test_redirect() {
         }};
     }
 
-    check!("", None);
-    check!("Big Cheese Horace", Some("big-cheese-horace"));
-    check!("Tufto's Proposal", Some("tufto-s-proposal"));
-    check!("SCP-1000", Some("scp-1000"));
-    check!("scp-1000/", Some("scp-1000"));
+    check!("Big Cheese Horace", Some("/big-cheese-horace"));
+    check!("Tufto's Proposal", Some("/tufto-s-proposal"));
+    check!("SCP-1000", Some("/scp-1000"));
+    check!("scp-1000/", Some("/scp-1000"));
     check!("scp-1000", None);
-    check!("COMPONENT:image-block", Some("component:image-block"));
+    check!("COMPONENT:image-block", Some("/component:image-block"));
     check!("component:image-block", None);
-    check!("_default:scp-1000", Some("scp-1000"));
-    check!("_default:SCP 1000", Some("scp-1000"));
+    check!("_default:scp-1000", Some("/scp-1000"));
+    check!("_default:SCP 1000", Some("/scp-1000"));
 
     check!("/", None);
     check!("/Big Cheese Horace", Some("/big-cheese-horace"));
@@ -45,6 +44,16 @@ fn test_redirect() {
     check!("/component:image-block", None);
     check!("/_default:scp-1000", Some("/scp-1000"));
     check!("/_default:SCP 1000", Some("/scp-1000"));
+
+    check!("Big%20Cheese%20Horace", Some("/big-cheese-horace"));
+    check!("Tufto%27s%20Proposal", Some("/tufto-s-proposal"));
+    check!("SCP%2d1000", Some("/scp-1000"));
+    check!("scp%2d1000/", Some("/scp-1000"));
+    check!("scp%2d1000", Some("/scp-1000"));
+    check!("COMPONENT%3aimage-block", Some("/component:image-block"));
+    check!("component%3aimage-block", Some("/component:image-block"));
+    check!("_default%3ascp-1000", Some("/scp-1000"));
+    check!("_default%3aSCP%201000", Some("/scp-1000"));
 }
 
 #[test]

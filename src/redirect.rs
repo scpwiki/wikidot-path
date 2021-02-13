@@ -41,21 +41,25 @@ pub fn redirect<S: AsRef<str>>(path: S) -> Option<String> {
     // Normalize path
     normalize(&mut path);
 
-    // Remove _default category
-    if let Some(mtch) = DEFAULT_CATEGORY_REGEX.find(&path) {
-        let range = mtch.start()..mtch.end();
-
-        path.replace_range(range, "");
+    // Ensure path begins with /
+    if !path.starts_with('/') {
+        path.insert(0, '/');
     }
 
-    // Ensure path isn't empty
-    if path.is_empty() {
-        path.push('/');
-    }
-
-    if path == original_path {
+    if paths_equal(original_path, &path) {
         None
     } else {
         Some(path)
     }
+}
+
+fn paths_equal(original_path: &str, mut new_path: &str) -> bool {
+    // If the original path doesn't start with /,
+    // then strip it from the new path for a
+    // fair comparison.
+    if !original_path.starts_with('/') {
+        new_path = &new_path[1..];
+    }
+
+    original_path == new_path
 }
