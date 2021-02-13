@@ -19,7 +19,7 @@ fn test_redirect() {
         ($input:expr, $expected:expr) => {{
             let path = redirect($input);
             let expected: Option<&str> = $expected;
-            let expected = expected.map(|s| str!(s));
+            let expected = expected.map(String::from);
             assert_eq!(path, expected, "Redirection didn't match expected");
         }};
     }

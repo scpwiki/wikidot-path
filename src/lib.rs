@@ -38,10 +38,6 @@ extern crate maplit;
 extern crate percent_encoding;
 extern crate regex;
 
-#[cfg(test)]
-#[macro_use]
-extern crate str_macro;
-
 #[cfg(feature = "serde-derive")]
 extern crate serde;
 extern crate wikidot_normalize;
