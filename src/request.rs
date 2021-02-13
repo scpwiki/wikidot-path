@@ -59,7 +59,7 @@ impl<'a> Request<'a> {
 
         // Get all page categories
         let (slug, category) = match slug.find(':') {
-            Some(idx) => slug.split_at(idx),
+            Some(idx) => (&slug[idx+1..], &slug[..idx]),
             None => (slug, "_default"),
         };
 
