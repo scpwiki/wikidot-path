@@ -24,4 +24,4 @@ maplit = "1"
 percent-encoding = "2"
 regex = "1"
 serde = { version = "1", features = ["derive"], optional = true }
-wikidot-normalize = "0.6"
+wikidot-normalize = "0.7"
