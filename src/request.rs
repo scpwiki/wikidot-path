@@ -16,7 +16,7 @@ use std::collections::HashMap;
 lazy_static! {
     static ref EMPTY_REQUEST: Request<'static> = Request {
         slug: "",
-        categories: vec![],
+        category: "_default",
         arguments: hashmap! {},
     };
 }
@@ -30,13 +30,8 @@ pub struct Request<'a> {
     /// For a page like "SCP-1000" this will be `scp-1000`.
     pub slug: &'a str,
 
-    /// A list of categories this page is in, in order of appearance.
-    ///
-    /// An empty list indicates that no categories were specified,
-    /// that is, no colons were present in the path.
-    /// By convention any pages like this are considered to be in
-    /// the `_default` category.
-    pub categories: Vec<&'a str>,
+    /// The category that this page appears in.
+    pub category: &'a str,
 
     /// What arguments were passed into the request.
     /// A mapping of key to value.
@@ -63,17 +58,9 @@ impl<'a> Request<'a> {
         };
 
         // Get all page categories
-        let (slug, categories) = {
-            let mut categories: Vec<_> = slug.split(':').collect();
-            let slug = match categories.pop() {
-                Some(slug) => slug,
-                None => {
-                    // Empty categories list, returning empty request
-                    return EMPTY_REQUEST.clone();
-                }
-            };
-
-            (slug, categories)
+        let (slug, category) = match slug.find(':') {
+            Some(idx) => slug.split_at(idx),
+            None => (slug, "_default"),
         };
 
         // Parse out Wikidot arguments
@@ -98,7 +85,7 @@ impl<'a> Request<'a> {
 
         Request {
             slug,
-            categories,
+            category,
             arguments,
         }
     }
