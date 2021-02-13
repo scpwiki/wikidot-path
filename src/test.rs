@@ -78,7 +78,7 @@ fn test_request() {
         "scp-1000",
         Request {
             slug: "scp-1000",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! {},
         }
     );
@@ -86,7 +86,7 @@ fn test_request() {
         "scp-1000/edit",
         Request {
             slug: "scp-1000",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::Null },
         }
     );
@@ -94,7 +94,7 @@ fn test_request() {
         "scp-1000/edit/1",
         Request {
             slug: "scp-1000",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::from(1) },
         }
     );
@@ -102,7 +102,7 @@ fn test_request() {
         "scp-1000/edit/true",
         Request {
             slug: "scp-1000",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "edit" => ArgumentValue::from(true) },
         }
     );
@@ -110,15 +110,15 @@ fn test_request() {
         "component:image-block",
         Request {
             slug: "image-block",
-            categories: vec!["component"],
+            category: "component",
             arguments: hashmap! {},
         }
     );
     check!(
         "deleted:component:image-block",
         Request {
-            slug: "image-block",
-            categories: vec!["deleted", "component"],
+            slug: "component:image-block",
+            category: "deleted",
             arguments: hashmap! {},
         }
     );
@@ -126,7 +126,7 @@ fn test_request() {
         "fragment:scp-4447-1",
         Request {
             slug: "scp-4447-1",
-            categories: vec!["fragment"],
+            category: "fragment",
             arguments: hashmap! {},
         }
     );
@@ -134,7 +134,7 @@ fn test_request() {
         "fragment:scp-4447-1/discuss",
         Request {
             slug: "scp-4447-1",
-            categories: vec!["fragment"],
+            category: "fragment",
             arguments: hashmap! { "discuss" => ArgumentValue::Null },
         }
     );
@@ -142,7 +142,7 @@ fn test_request() {
         "fragment:scp-4447-1/discuss/true",
         Request {
             slug: "scp-4447-1",
-            categories: vec!["fragment"],
+            category: "fragment",
             arguments: hashmap! { "discuss" => ArgumentValue::from(true) },
         }
     );
@@ -150,7 +150,7 @@ fn test_request() {
         "scp-series-5",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! {},
         }
     );
@@ -158,7 +158,7 @@ fn test_request() {
         "scp-series-5/norender",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::Null },
         }
     );
@@ -166,7 +166,7 @@ fn test_request() {
         "scp-series-5/norender/1",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1) },
         }
     );
@@ -174,7 +174,7 @@ fn test_request() {
         "scp-series-5/norender/true",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true) },
         }
     );
@@ -182,7 +182,7 @@ fn test_request() {
         "scp-series-5/norender/true/noredirect",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
         }
     );
@@ -190,7 +190,7 @@ fn test_request() {
         "scp-series-5/norender/1/noredirect",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::Null },
         }
     );
@@ -198,7 +198,7 @@ fn test_request() {
         "scp-series-5/norender/true/noredirect",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
         }
     );
@@ -206,7 +206,7 @@ fn test_request() {
         "scp-series-5/norender/true/noredirect/true",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
         }
     );
@@ -214,7 +214,7 @@ fn test_request() {
         "scp-series-5/norender/1/noredirect/1",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::from(1) },
         }
     );
@@ -222,7 +222,7 @@ fn test_request() {
         "scp-series-5/norender/true/noredirect/true",
         Request {
             slug: "scp-series-5",
-            categories: vec![],
+            category: "_default",
             arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
         }
     );
@@ -230,7 +230,7 @@ fn test_request() {
         "aaa:page/true/false/true/false/edit",
         Request {
             slug: "page",
-            categories: vec!["aaa"],
+            category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::Null },
         }
     );
@@ -238,7 +238,7 @@ fn test_request() {
         "aaa:page/true/false/true/false/edit/1",
         Request {
             slug: "page",
-            categories: vec!["aaa"],
+            category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::from(1) },
         }
     );
@@ -246,23 +246,23 @@ fn test_request() {
         "aaa:page/true/false/true/false/edit/true",
         Request {
             slug: "page",
-            categories: vec!["aaa"],
+            category: "aaa",
             arguments: hashmap! { "edit" => ArgumentValue::from(true) },
         }
     );
     check!(
         "aaa:bbb:page/noredirect/false/norender/0/true/false",
         Request {
-            slug: "page",
-            categories: vec!["aaa", "bbb"],
+            slug: "bbb:page",
+            category: "aaa",
             arguments: hashmap! { "noredirect" => ArgumentValue::from(false), "norender" => ArgumentValue::from(0) },
         }
     );
     check!(
         "aaa:bbb:page/tags/tale/title/A Story/edit",
         Request {
-            slug: "page",
-            categories: vec!["aaa", "bbb"],
+            slug: "bbb:page",
+            category: "aaa",
             arguments: hashmap! {
                 "tags" => ArgumentValue::from("tale"),
                 "title" => ArgumentValue::from("A Story"),
