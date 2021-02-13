@@ -48,7 +48,7 @@ impl<'a> Request<'a> {
     /// Makes a best-effort match if the path is not in normal form.
     pub fn parse(mut path: &'a str) -> Self {
         if path.starts_with('/') {
-            trace!("Removing leading slash");
+            // Remove leading slash
             path = &path[1..];
         }
 
@@ -57,8 +57,7 @@ impl<'a> Request<'a> {
         let slug = match parts.next() {
             Some(slug) => slug,
             None => {
-                trace!("No slug found, returning empty request");
-
+                // No slug found, return an empty request
                 return EMPTY_REQUEST.clone();
             }
         };
@@ -69,8 +68,7 @@ impl<'a> Request<'a> {
             let slug = match categories.pop() {
                 Some(slug) => slug,
                 None => {
-                    trace!("Empty categories list, returning empty request");
-
+                    // Empty categories list, returning empty request
                     return EMPTY_REQUEST.clone();
                 }
             };

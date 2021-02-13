@@ -31,8 +31,6 @@ lazy_static! {
 pub fn redirect<S: AsRef<str>>(path: S) -> Option<String> {
     let original_path = path.as_ref();
 
-    debug!("Checking path {}", original_path);
-
     // Perform percent decoding
     let mut path = {
         let original_path_bytes = original_path.as_bytes();
@@ -50,13 +48,14 @@ pub fn redirect<S: AsRef<str>>(path: S) -> Option<String> {
         path.replace_range(range, "");
     }
 
-    if path == original_path {
-        trace!("No redirection needed");
+    // Ensure path isn't empty
+    if path.is_empty() {
+        path.push('/');
+    }
 
+    if path == original_path {
         None
     } else {
-        debug!("Redirecting path to {}", path);
-
         Some(path)
     }
 }

@@ -31,9 +31,6 @@ extern crate cfg_if;
 extern crate lazy_static;
 
 #[macro_use]
-extern crate log;
-
-#[macro_use]
 extern crate maplit;
 extern crate percent_encoding;
 extern crate regex;
