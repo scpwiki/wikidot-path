@@ -61,7 +61,7 @@ impl<'a> Request<'a> {
         let (slug, category) = match slug.find(':') {
             // We can't use .split_at() because we want to
             // exclude the ':' from appearing in the string.
-            Some(idx) => (&slug[idx+1..], &slug[..idx]),
+            Some(idx) => (&slug[idx + 1..], &slug[..idx]),
             None => (slug, "_default"),
         };
 
