@@ -54,6 +54,15 @@ fn test_redirect() {
     check!("component%3aimage-block", Some("/component:image-block"));
     check!("_default%3ascp-1000", Some("/scp-1000"));
     check!("_default%3aSCP%201000", Some("/scp-1000"));
+
+    check!("page?", Some("/page"));
+    check!("page?q", Some("/page"));
+    check!("page?q=test", Some("/page"));
+    check!("page?a=1&b=2", Some("/page"));
+    check!("Large Reptile?", Some("/large-reptile"));
+    check!("Large Reptile?q", Some("/large-reptile"));
+    check!("Large Reptile?q=test", Some("/large-reptile"));
+    check!("Large Reptile?a=1&b=2", Some("/large-reptile"));
 }
 
 #[test]

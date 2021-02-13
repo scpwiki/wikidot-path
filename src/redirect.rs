@@ -33,6 +33,11 @@ pub fn redirect<S: AsRef<str>>(path: S) -> Option<String> {
         decoded.into_owned()
     };
 
+    // Remove parameters
+    if let Some(idx) = path.find('?') {
+        path.replace_range(idx.., "");
+    }
+
     // Normalize path
     normalize(&mut path);
 
