@@ -35,6 +35,7 @@ extern crate log;
 
 #[macro_use]
 extern crate maplit;
+extern crate percent_encoding;
 extern crate regex;
 
 #[cfg(test)]

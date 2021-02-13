@@ -11,8 +11,9 @@
  *
  */
 
+use percent_encoding::percent_decode;
 use regex::Regex;
-use wikidot_normalize::{is_normal, normalize_decode};
+use wikidot_normalize::normalize;
 
 lazy_static! {
     static ref DEFAULT_CATEGORY_REGEX: Regex = Regex::new(r"\b_default:").unwrap();
@@ -25,33 +26,37 @@ lazy_static! {
 ///
 /// This also redirects pages in the default category: `_default:page` will be
 /// redirected to simply `page`.
-pub fn redirect<S: Into<String>>(path: S) -> Option<String> {
-    let mut path = path.into();
-    let mut modified = false;
+///
+/// It also decodes any percent codes within the string.
+pub fn redirect<S: AsRef<str>>(path: S) -> Option<String> {
+    let original_path = path.as_ref();
 
-    debug!("Checking path {}", path);
+    debug!("Checking path {}", original_path);
+
+    // Perform percent decoding
+    let mut path = {
+        let original_path_bytes = original_path.as_bytes();
+        let decoded = percent_decode(original_path_bytes).decode_utf8_lossy();
+        decoded.into_owned()
+    };
 
     // Normalize path
-    if !is_normal(&path, true) {
-        normalize_decode(&mut path);
-        modified = true;
-    }
+    normalize(&mut path);
 
     // Remove _default category
     if let Some(mtch) = DEFAULT_CATEGORY_REGEX.find(&path) {
         let range = mtch.start()..mtch.end();
 
         path.replace_range(range, "");
-        modified = true;
     }
 
-    if modified {
-        debug!("Redirecting path to {}", path);
-
-        Some(path)
-    } else {
+    if path == original_path {
         trace!("No redirection needed");
 
         None
+    } else {
+        debug!("Redirecting path to {}", path);
+
+        Some(path)
     }
 }
