@@ -33,7 +33,6 @@ extern crate lazy_static;
 #[macro_use]
 extern crate maplit;
 extern crate percent_encoding;
-extern crate regex;
 
 #[cfg(feature = "serde-derive")]
 extern crate serde;

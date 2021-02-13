@@ -12,12 +12,7 @@
  */
 
 use percent_encoding::percent_decode;
-use regex::Regex;
 use wikidot_normalize::normalize;
-
-lazy_static! {
-    static ref DEFAULT_CATEGORY_REGEX: Regex = Regex::new(r"\b_default:").unwrap();
-}
 
 /// Determines if a request with the given path should be redirected or not.
 ///
