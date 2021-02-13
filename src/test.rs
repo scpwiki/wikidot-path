@@ -183,7 +183,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(true),
+                "noredirect" => ArgumentValue::Null,
+            },
         },
     );
     check!(
@@ -191,7 +194,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::Null },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(1),
+                "noredirect" => ArgumentValue::Null,
+            },
         },
     );
     check!(
@@ -199,7 +205,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::Null },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(true),
+                "noredirect" => ArgumentValue::Null,
+            },
         },
     );
     check!(
@@ -207,7 +216,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(true),
+                "noredirect" => ArgumentValue::from(true),
+            },
         },
     );
     check!(
@@ -215,7 +227,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(1), "noredirect" => ArgumentValue::from(1) },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(1),
+                "noredirect" => ArgumentValue::from(1),
+            },
         },
     );
     check!(
@@ -223,7 +238,10 @@ fn test_request() {
         Request {
             slug: "scp-series-5",
             category: "_default",
-            arguments: hashmap! { "norender" => ArgumentValue::from(true), "noredirect" => ArgumentValue::from(true) },
+            arguments: hashmap! {
+                "norender" => ArgumentValue::from(true),
+                "noredirect" => ArgumentValue::from(true),
+            },
         },
     );
     check!(
@@ -255,7 +273,10 @@ fn test_request() {
         Request {
             slug: "bbb:page",
             category: "aaa",
-            arguments: hashmap! { "noredirect" => ArgumentValue::from(false), "norender" => ArgumentValue::from(0) },
+            arguments: hashmap! {
+                "noredirect" => ArgumentValue::from(false),
+                "norender" => ArgumentValue::from(0),
+            },
         },
     );
     check!(
