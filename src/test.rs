@@ -17,10 +17,10 @@ use crate::prelude::*;
 fn test_redirect() {
     macro_rules! check {
         ($input:expr, $expected:expr) => {{
-            let path = redirect($input);
+            let actual = redirect($input);
             let expected: Option<&str> = $expected;
             let expected = expected.map(String::from);
-            assert_eq!(path, expected, "Redirection didn't match expected");
+            assert_eq!(actual, expected, "Redirection didn't match expected");
         }};
     }
 
@@ -51,8 +51,8 @@ fn test_redirect() {
 fn test_request() {
     macro_rules! check {
         ($path:expr, $expected:expr) => {{
-            let page_req = Request::parse($path);
-            assert_eq!(page_req, $expected, "Parsed Request doesn't match expected");
+            let actual = Request::parse($path);
+            assert_eq!(actual, $expected, "Parsed Request doesn't match expected");
         }};
     }
 
