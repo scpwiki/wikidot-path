@@ -1,5 +1,5 @@
 ## wikidot-path
-[![Build Status](https://travis-ci.org/Nu-SCPTheme/wikidot-path.svg?branch=master)](https://travis-ci.org/Nu-SCPTheme/wikidot-path)
+[![Build Status](https://travis-ci.org/scpwiki/wikidot-path.svg?branch=master)](https://travis-ci.org/scpwiki/wikidot-path)
 
 Simple library to provide Wikidot-compatible path parsing.
 

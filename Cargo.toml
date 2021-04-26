@@ -1,7 +1,7 @@
 [package]
 name = "wikidot-path"
 description = "Simple library to provide Wikidot-compatible path parsing"
-repository = "https://github.com/Nu-SCPTheme/wikidot-path"
+repository = "https://github.com/scpwiki/wikidot-path"
 readme = "README.md"
 license = "MIT"
 keywords = ["wikidot", "path", "parsing"]
@@ -9,9 +9,6 @@ keywords = ["wikidot", "path", "parsing"]
 version = "0.2.2"
 authors = ["Ammon Smith <ammon.i.smith@gmail.com>"]
 edition = "2018" # this refers to the Cargo.toml version
-
-[badges]
-travis-ci = { repository = "Nu-SCPTheme/wikidot-path", branch = "master" }
 
 [features]
 default = []
