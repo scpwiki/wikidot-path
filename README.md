@@ -1,5 +1,16 @@
 ## wikidot-path
-[![Build Status](https://travis-ci.org/scpwiki/wikidot-path.svg?branch=master)](https://travis-ci.org/scpwiki/wikidot-path)
+
+<p>
+  <a href="https://github.com/scpwiki/wikidot-path/actions?query=workflow%3A%22Rust+CI%22">
+    <img src="https://github.com/scpwiki/wikidot-path/workflows/Rust%20CI/badge.svg"
+         alt="Rust CI badge">
+  </a>
+
+  <a href="https://docs.rs/wikidot-path">
+    <img src="https://docs.rs/wikidot-path/badge.svg"
+         alt="docs.rs link">
+  </a>
+</p>
 
 Simple library to provide Wikidot-compatible path parsing.
 
