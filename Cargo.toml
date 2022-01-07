@@ -20,4 +20,4 @@ lazy_static = "1"
 maplit = "1"
 percent-encoding = "2"
 serde = { version = "1", features = ["derive"], optional = true }
-wikidot-normalize = "0.7"
+wikidot-normalize = "0.9"
