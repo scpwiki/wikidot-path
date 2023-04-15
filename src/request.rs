@@ -147,8 +147,8 @@ impl<'a> From<&'a str> for ArgumentValue<'a> {
     fn from(value: &'a str) -> Self {
         match value {
             "" => ArgumentValue::Null,
-            "true" => ArgumentValue::Boolean(true),
-            "false" => ArgumentValue::Boolean(false),
+            "t" | "true" => ArgumentValue::Boolean(true),
+            "f" | "false" => ArgumentValue::Boolean(false),
             _ => match value.parse::<i32>() {
                 Ok(int) => ArgumentValue::Integer(int),
                 Err(_) => ArgumentValue::String(value),
