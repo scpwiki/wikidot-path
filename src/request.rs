@@ -71,6 +71,8 @@ impl<'a> Request<'a> {
         // This algorithm is compatible with the /KEY/true format,
         // but also allowing the more sensible /KEY for options
         // where a 'false' value doesn't make sense, like 'norender' or 'edit'.
+        //
+        // If there are duplicate keys, the most recent one takes precedence.
         let arguments = {
             let mut arguments = HashMap::new();
 
