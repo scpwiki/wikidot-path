@@ -11,6 +11,7 @@
  *
  */
 
+use super::value::OptionValue;
 use std::collections::HashMap;
 
 /// Represents the set of options for a page.
@@ -25,7 +26,7 @@ use std::collections::HashMap;
 /// When passed as a string input, the leading `/` character is optional.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize))]
-pub struct PageOptions<'a>(pub HashMap<&'a str, ArgumentValue<'a>>);
+pub struct PageOptions<'a>(pub HashMap<&'a str, OptionValue<'a>>);
 
 impl<'a> PageOptions<'a> {
     /// Parse out Wikidot arguments.
@@ -54,79 +55,10 @@ impl<'a> PageOptions<'a> {
                 continue;
             }
 
-            let value = ArgumentValue::from(parts.next());
+            let value = OptionValue::from(parts.next());
             arguments.insert(key, value);
         }
 
         PageOptions(arguments)
-    }
-}
-
-/// A type for possible values an argument key could have.
-///
-/// Those consuming values should attempt to be flexible when
-/// accepting values. For instance a truthy key should accept
-/// `1`, `true`, and `Null` (as it indicates that they key is
-/// present at all) as meaning "true".
-#[derive(Debug, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde-derive", derive(Serialize, Deserialize))]
-#[cfg_attr(feature = "serde-derive", serde(untagged))]
-pub enum ArgumentValue<'a> {
-    /// A string argument value.
-    String(&'a str),
-
-    /// An integer argument value.
-    Integer(i32),
-
-    /// A boolean argument value.
-    Boolean(bool),
-
-    /// No value explicitly passed for this argument.
-    /// It notes that the key was included in the mapping.
-    Null,
-}
-
-impl<'a> From<Option<&'a str>> for ArgumentValue<'a> {
-    #[inline]
-    fn from(value: Option<&'a str>) -> Self {
-        match value {
-            Some(value) => ArgumentValue::from(value),
-            None => ArgumentValue::Null,
-        }
-    }
-}
-
-impl<'a> From<&'a str> for ArgumentValue<'a> {
-    fn from(value: &'a str) -> Self {
-        match value {
-            "" => ArgumentValue::Null,
-            "t" | "true" => ArgumentValue::Boolean(true),
-            "f" | "false" => ArgumentValue::Boolean(false),
-            _ => match value.parse::<i32>() {
-                Ok(int) => ArgumentValue::Integer(int),
-                Err(_) => ArgumentValue::String(value),
-            },
-        }
-    }
-}
-
-impl From<bool> for ArgumentValue<'_> {
-    #[inline]
-    fn from(value: bool) -> Self {
-        ArgumentValue::Boolean(value)
-    }
-}
-
-impl From<i32> for ArgumentValue<'_> {
-    #[inline]
-    fn from(value: i32) -> Self {
-        ArgumentValue::Integer(value)
-    }
-}
-
-impl From<()> for ArgumentValue<'_> {
-    #[inline]
-    fn from(_: ()) -> Self {
-        ArgumentValue::Null
     }
 }

@@ -41,12 +41,14 @@ extern crate wikidot_normalize;
 
 mod options;
 mod redirect;
+mod value;
 
 #[cfg(test)]
 mod test;
 
-pub use self::options::{ArgumentValue, PageOptions};
+pub use self::options::PageOptions;
 pub use self::redirect::redirect;
+pub use self::value::OptionValue;
 
 /// A "prelude" for consumers of the `wikidot-path` crate.
 ///
@@ -54,6 +56,7 @@ pub use self::redirect::redirect;
 /// for convenience without requiring programs to do a glob import of
 /// the whole crate.
 pub mod prelude {
-    pub use super::options::{ArgumentValue, PageOptions};
+    pub use super::options::PageOptions;
     pub use super::redirect::redirect;
+    pub use super::value::OptionValue;
 }
