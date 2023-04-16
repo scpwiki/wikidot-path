@@ -72,8 +72,7 @@ fn test_option_value() {
             let actual = OptionValue::from($input);
 
             assert_eq!(
-                actual,
-                $expected,
+                actual, $expected,
                 "Actual parsed option value doesn't match expected",
             );
         }};
@@ -102,12 +101,33 @@ fn test_options() {
             let actual = PageOptions::parse($input);
 
             assert_eq!(
-                actual.0,
-                $expected,
+                actual.0, $expected,
                 "Actual parsed page options don't match expected",
             );
         }};
     }
 
+    macro_rules! o {
+        () => {
+            OptionValue::Null
+        };
+
+        ($value:expr $(,)?) => {
+            OptionValue::from($value)
+        };
+    }
+
     check!("", hashmap! {});
+    check!("offset/4", hashmap! {"offset" => o!(4)});
+    check!("norender/true", hashmap! {"norender" => o!(true)});
+    check!("norender/1", hashmap! {"norender" => o!(1)});
+    check!("norender", hashmap! {"norender" => o!()});
+    check!(
+        "edit/T/tags/tale/title/My Tale",
+        hashmap! {"edit" => o!(true), "tags" => o!("tale"), "title" => o!("My Tale")},
+    );
+
+    check!("/", hashmap! {});
+    check!("/offset/2", hashmap! {"offset" => o!(2)});
+    check!("/edit/true", hashmap! {"edit" => o!(true)});
 }
