@@ -6,7 +6,7 @@ readme = "README.md"
 license = "MIT"
 keywords = ["wikidot", "path", "parsing"]
 
-version = "0.2.5"
+version = "0.3.0"
 authors = ["Emmie Maeda <emmie.maeda@gmail.com>"]
 edition = "2021" # this refers to the Cargo.toml version
 
