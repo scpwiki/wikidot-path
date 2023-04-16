@@ -15,7 +15,6 @@ default = []
 serde-derive = ["serde"]
 
 [dependencies]
-percent-encoding = "2"
 serde = { version = "1", features = ["derive"], optional = true }
 wikidot-normalize = "0.11"
 

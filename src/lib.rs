@@ -27,7 +27,6 @@
 #[cfg(test)]
 #[macro_use]
 extern crate maplit;
-extern crate percent_encoding;
 
 #[cfg(feature = "serde-derive")]
 extern crate serde;
