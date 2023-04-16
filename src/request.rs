@@ -25,12 +25,13 @@ lazy_static! {
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize))]
 pub struct Request<'a> {
-    /// The slug, or URL identifier of a page.
+    /// The slug, or URL identifier of a page, including its category.
     ///
-    /// For a page like "SCP-1000" this will be `scp-1000`.
+    /// For instance, `scp-1000` or `system:recent-changes`.
     pub slug: &'a str,
 
     /// The category that this page appears in.
+    /// If in the default category, then this string is `_default`.
     pub category: &'a str,
 
     /// What arguments were passed into the request.
@@ -111,6 +112,7 @@ pub enum ArgumentValue<'a> {
     Boolean(bool),
 
     /// No value explicitly passed for this argument.
+    /// It notes that the key was included in the mapping.
     Null,
 }
 
