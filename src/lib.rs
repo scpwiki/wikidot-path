@@ -29,8 +29,8 @@
 extern crate maplit;
 
 #[cfg(feature = "serde-derive")]
+#[macro_use]
 extern crate serde;
-extern crate wikidot_normalize;
 
 mod options;
 mod schema;
