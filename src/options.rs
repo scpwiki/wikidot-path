@@ -11,8 +11,11 @@
  *
  */
 
+use super::schema::OptionSchema;
 use super::value::OptionValue;
 use std::collections::HashMap;
+
+pub type PageOptionsMap<'a> = HashMap<&'a str, OptionValue<'a>>;
 
 /// Represents the set of options for a page.
 ///
@@ -26,7 +29,7 @@ use std::collections::HashMap;
 /// When passed as a string input, the leading `/` character is optional.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize))]
-pub struct PageOptions<'a>(pub HashMap<&'a str, OptionValue<'a>>);
+pub struct PageOptions<'a>(pub PageOptionsMap<'a>);
 
 impl<'a> PageOptions<'a> {
     /// Parse out Wikidot arguments.
@@ -39,7 +42,7 @@ impl<'a> PageOptions<'a> {
     /// (i.e. null, boolean, or integer),
     ///
     /// If there are duplicate keys, the most recent one takes precedence.
-    pub fn parse(mut path: &'a str) -> Self {
+    pub fn parse(mut path: &'a str, schema: OptionSchema) -> Self {
         // Remove leading slash
         if path.starts_with('/') {
             path = &path[1..];
@@ -49,17 +52,38 @@ impl<'a> PageOptions<'a> {
         let mut arguments = HashMap::new();
         let mut parts = path.split('/');
 
-        while let Some(key) = parts.next() {
-            match OptionValue::from(key) {
-                // If this looks like the previous key's value, then skip it.
-                OptionValue::Null | OptionValue::Boolean(_) | OptionValue::Integer(_) => continue,
+        fn process_argument<'a>(
+            arguments: &mut PageOptionsMap<'a>,
+            key: &'a str,
+            parts: &mut dyn Iterator<Item = &'a str>,
+            schema: OptionSchema,
+        ) {
+            let value = parts.next();
 
-                // Regular key/value, get second in pair and add to arguments.
-                _ => {
-                    let value = OptionValue::from(parts.next());
-                    arguments.insert(key, value);
+            if schema.solo_keys.contains(&key) {
+                // If this potentially is a solo key, then check if the next
+                // value looks like the next key rather than a value.
+
+                if let Some(value) = value {
+                    if schema.valid_keys.contains(&value) {
+                        // Yield as solo key
+                        //
+                        // However if we discard 'value' (really the next pair's key)
+                        // we will lose data, so we recursively call this function to
+                        // handle it.
+                        arguments.insert(key, OptionValue::Null);
+                        process_argument(arguments, value, parts, schema);
+                        return;
+                    }
                 }
             }
+
+            // Otherwise, return as normal key-value pair
+            arguments.insert(key, OptionValue::from(value));
+        }
+
+        while let Some(key) = parts.next() {
+            process_argument(&mut arguments, key, &mut parts, schema);
         }
 
         PageOptions(arguments)
