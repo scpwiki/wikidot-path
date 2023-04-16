@@ -18,22 +18,9 @@ Wikidot accepts paths in an unusual manner: each argument is submitted as anothe
 
 For instance, to access page `scp-xxxx` with options `norender` and `edit`, you would go to `/scp-xxxx/norender/true/edit/true`.
 
-However this also extends its usage in a few minor ways. For instance, options like `edit` only make sense when `true`, but passing that field is always required by Wikidot. Thus the logical URL `/scp-xxxx/edit` doesn't work, despite it being rather clear to a human what the intent is. This library adjusts this by allowing "dangling keys" (those without values).
+However this also extends its usage in a few minor ways. For instance, options like `edit` only make sense when `true`, but passing that field is always required by Wikidot. Thus the logical URL `/scp-xxxx/edit` doesn't work, despite it being rather clear to a human what the intent is. This library adjusts this by allowing "solo keys" (those without values).
 
 Additionally URL normalization is performed. See the [`wikidot-normalize`](https://crates.io/crates/wikidot-normalize) crate for more information.
-
-An example would be how the path `/component:image-block/noredirect/true/tags/template` is parsed:
-
-```rust
-Request {
-    slug: "image-block",
-    categories: vec!["component"],
-    arguments: hashmap! {
-        "noredirect" -> true,
-        "tags" -> "template",
-    },
-}
-```
 
 Available under the terms of the MIT License. See [LICENSE.md](LICENSE).
 
