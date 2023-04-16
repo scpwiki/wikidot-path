@@ -97,4 +97,17 @@ fn test_option_value() {
 
 #[test]
 fn test_options() {
+    macro_rules! check {
+        ($input:expr, $expected:expr $(,)?) => {{
+            let actual = PageOptions::parse($input);
+
+            assert_eq!(
+                actual.0,
+                $expected,
+                "Actual parsed page options don't match expected",
+            );
+        }};
+    }
+
+    check!("", hashmap! {});
 }
