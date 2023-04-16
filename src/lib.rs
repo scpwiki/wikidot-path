@@ -30,6 +30,7 @@ extern crate cfg_if;
 #[macro_use]
 extern crate lazy_static;
 
+#[cfg(test)]
 #[macro_use]
 extern crate maplit;
 extern crate percent_encoding;
@@ -38,14 +39,14 @@ extern crate percent_encoding;
 extern crate serde;
 extern crate wikidot_normalize;
 
+mod options;
 mod redirect;
-mod request;
 
 #[cfg(test)]
 mod test;
 
+pub use self::options::{ArgumentValue, PageOptions};
 pub use self::redirect::redirect;
-pub use self::request::{ArgumentValue, Request};
 
 /// A "prelude" for consumers of the `wikidot-path` crate.
 ///
@@ -53,6 +54,6 @@ pub use self::request::{ArgumentValue, Request};
 /// for convenience without requiring programs to do a glob import of
 /// the whole crate.
 pub mod prelude {
+    pub use super::options::{ArgumentValue, PageOptions};
     pub use super::redirect::redirect;
-    pub use super::request::{ArgumentValue, Request};
 }
