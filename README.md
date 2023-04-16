@@ -38,7 +38,7 @@ Request {
 Available under the terms of the MIT License. See [LICENSE.md](LICENSE).
 
 ### Compilation
-This library targets the latest stable Rust. At time of writing, that is 1.57.0
+This library targets the latest stable Rust. At time of writing, that is 1.68.2
 
 ```sh
 $ cargo build --release
