@@ -96,9 +96,22 @@ fn test_option_value() {
 
 #[test]
 fn test_options() {
+    const SCHEMA: OptionSchema = OptionSchema {
+        valid_keys: &[
+            "edit",
+            "comments",
+            "noredirect",
+            "norender",
+            "offset",
+            "tags",
+            "title",
+        ],
+        solo_keys: &["edit", "comments", "noredirect", "norender"],
+    };
+
     macro_rules! check {
         ($input:expr, $expected:expr $(,)?) => {{
-            let actual = PageOptions::parse($input);
+            let actual = PageOptions::parse($input, SCHEMA);
 
             assert_eq!(
                 actual.0, $expected,
@@ -122,6 +135,22 @@ fn test_options() {
     check!("norender/true", hashmap! {"norender" => o!(true)});
     check!("norender/1", hashmap! {"norender" => o!(1)});
     check!("norender", hashmap! {"norender" => o!()});
+    check!(
+        "norender/t/noredirect",
+        hashmap! {"norender" => o!(true), "noredirect" => o!()},
+    );
+    check!(
+        "norender/noredirect/t",
+        hashmap! {"norender" => o!(), "noredirect" => o!(true)},
+    );
+    check!(
+        "offset/4/norender/noredirect/",
+        hashmap! {"offset" => o!(4), "norender" => o!(), "noredirect" => o!()},
+    );
+    check!(
+        "edit/title/Foo",
+        hashmap! {"edit" => o!(), "title" => o!("Foo")},
+    );
     check!(
         "edit/T/tags/tale/title/My Tale",
         hashmap! {"edit" => o!(true), "tags" => o!("tale"), "title" => o!("My Tale")},
