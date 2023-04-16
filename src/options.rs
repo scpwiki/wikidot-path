@@ -45,7 +45,7 @@ impl<'a> PageOptions<'a> {
             path = &path[1..];
         }
 
-        // Process each
+        // Process each section of the options string into keys and values.
         let mut arguments = HashMap::new();
         let mut parts = path.split('/');
 
