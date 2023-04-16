@@ -17,7 +17,7 @@
 /// accepting values. For instance a truthy key should accept
 /// `1`, `true`, and `Null` (as it indicates that they key is
 /// present at all) as meaning "true".
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "serde-derive", serde(untagged))]
 pub enum OptionValue<'a> {
@@ -47,14 +47,23 @@ impl<'a> From<Option<&'a str>> for OptionValue<'a> {
 
 impl<'a> From<&'a str> for OptionValue<'a> {
     fn from(value: &'a str) -> Self {
-        match value {
-            "" => OptionValue::Null,
-            "t" | "true" => OptionValue::Boolean(true),
-            "f" | "false" => OptionValue::Boolean(false),
-            _ => match value.parse::<i32>() {
-                Ok(int) => OptionValue::Integer(int),
-                Err(_) => OptionValue::String(value),
-            },
+        const SPECIAL_VALUES: [(&str, OptionValue); 5] = [
+            ("", OptionValue::Null),
+            ("t", OptionValue::Boolean(true)),
+            ("f", OptionValue::Boolean(false)),
+            ("true", OptionValue::Boolean(true)),
+            ("false", OptionValue::Boolean(false)),
+        ];
+
+        for (name, result) in &SPECIAL_VALUES {
+            if name.eq_ignore_ascii_case(value) {
+                return *result;
+            }
+        }
+
+        match value.parse::<i32>() {
+            Ok(int) => OptionValue::Integer(int),
+            Err(_) => OptionValue::String(value),
         }
     }
 }
