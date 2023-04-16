@@ -50,13 +50,16 @@ impl<'a> PageOptions<'a> {
         let mut parts = path.split('/');
 
         while let Some(key) = parts.next() {
-            // If this looks like a value, then skip it.
-            if key.is_empty() || key == "true" || key == "false" {
-                continue;
-            }
+            match OptionValue::from(key) {
+                // If this looks like the previous key's value, then skip it.
+                OptionValue::Null | OptionValue::Boolean(_) | OptionValue::Integer(_) => continue,
 
-            let value = OptionValue::from(parts.next());
-            arguments.insert(key, value);
+                // Regular key/value, get second in pair and add to arguments.
+                _ => {
+                    let value = OptionValue::from(parts.next());
+                    arguments.insert(key, value);
+                }
+            }
         }
 
         PageOptions(arguments)
