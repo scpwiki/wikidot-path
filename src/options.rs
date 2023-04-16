@@ -71,6 +71,7 @@ impl<'a> PageOptions<'a> {
                         // However if we discard 'value' (really the next pair's key)
                         // we will lose data, so we recursively call this function to
                         // handle it.
+
                         arguments.insert(key, OptionValue::Null);
                         process_argument(arguments, value, parts, schema);
                         return;
@@ -83,7 +84,9 @@ impl<'a> PageOptions<'a> {
         }
 
         while let Some(key) = parts.next() {
-            process_argument(&mut arguments, key, &mut parts, schema);
+            if !key.is_empty() {
+                process_argument(&mut arguments, key, &mut parts, schema);
+            }
         }
 
         PageOptions(arguments)
