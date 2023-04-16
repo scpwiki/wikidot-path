@@ -24,12 +24,6 @@
 //! See the [`wikidot-normalize`](https://crates.io/crates/wikidot-normalize)
 //! crate for more information.
 
-#[macro_use]
-extern crate cfg_if;
-
-#[macro_use]
-extern crate lazy_static;
-
 #[cfg(test)]
 #[macro_use]
 extern crate maplit;
