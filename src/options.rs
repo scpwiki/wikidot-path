@@ -25,7 +25,7 @@ use std::collections::HashMap;
 ///
 /// When passed as a string input, the leading `/` character is optional.
 #[derive(Debug, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde-derive", derive(Serialize))]
+#[cfg_attr(feature = "serde-derive", derive(Serialize, Deserialize))]
 pub struct PageOptions<'a>(pub HashMap<&'a str, OptionValue<'a>>);
 
 impl<'a> PageOptions<'a> {
