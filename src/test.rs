@@ -12,6 +12,7 @@
  */
 
 use crate::prelude::*;
+use std::collections::HashMap;
 
 #[test]
 fn test_option_value() {
@@ -59,10 +60,15 @@ fn test_options() {
 
     macro_rules! check {
         ($input:expr, $expected:expr $(,)?) => {{
-            let actual = PageArguments::parse($input, SCHEMA);
+            // Map to remove original value string
+            let actual: HashMap<&str, ArgumentValue> = PageArguments::parse($input, SCHEMA)
+                .0
+                .into_iter()
+                .map(|(key, (value, _))| (key, value))
+                .collect();
 
             assert_eq!(
-                actual.0, $expected,
+                actual, $expected,
                 "Actual parsed page options don't match expected",
             );
         }};

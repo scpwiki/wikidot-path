@@ -15,7 +15,7 @@ use super::schema::ArgumentSchema;
 use super::value::ArgumentValue;
 use std::collections::HashMap;
 
-pub type PageArgumentsMap<'a> = HashMap<&'a str, ArgumentValue<'a>>;
+pub type PageArgumentsMap<'a> = HashMap<&'a str, (ArgumentValue<'a>, &'a str)>;
 
 /// Represents the set of arguments for a page.
 ///
@@ -72,7 +72,7 @@ impl<'a> PageArguments<'a> {
                         // we will lose data, so we recursively call this function to
                         // handle it.
 
-                        arguments.insert(key, ArgumentValue::Null);
+                        arguments.insert(key, (ArgumentValue::Null, value));
                         process_argument(arguments, value, parts, schema);
                         return;
                     }
@@ -80,7 +80,7 @@ impl<'a> PageArguments<'a> {
             }
 
             // Otherwise, return as normal key-value pair
-            arguments.insert(key, ArgumentValue::from(value));
+            arguments.insert(key, (ArgumentValue::from(value), value.unwrap_or("")));
         }
 
         while let Some(key) = parts.next() {
