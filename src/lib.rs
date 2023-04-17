@@ -32,16 +32,16 @@ extern crate maplit;
 #[macro_use]
 extern crate serde;
 
-mod options;
+mod arguments;
 mod schema;
 mod value;
 
 #[cfg(test)]
 mod test;
 
-pub use self::options::PageOptions;
-pub use self::schema::OptionSchema;
-pub use self::value::OptionValue;
+pub use self::arguments::PageArguments;
+pub use self::schema::ArgumentSchema;
+pub use self::value::ArgumentValue;
 
 /// A "prelude" for consumers of the `wikidot-path` crate.
 ///
@@ -49,7 +49,7 @@ pub use self::value::OptionValue;
 /// for convenience without requiring programs to do a glob import of
 /// the whole crate.
 pub mod prelude {
-    pub use super::options::PageOptions;
-    pub use super::schema::OptionSchema;
-    pub use super::value::OptionValue;
+    pub use super::arguments::PageArguments;
+    pub use super::schema::ArgumentSchema;
+    pub use super::value::ArgumentValue;
 }

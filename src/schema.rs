@@ -11,9 +11,9 @@
  *
  */
 
-/// Helper structure to assist with option parsing.
+/// Helper structure to assist with argument parsing.
 #[derive(Debug, Copy, Clone)]
-pub struct OptionSchema<'a> {
+pub struct ArgumentSchema<'a> {
     /// Describes which keys are valid.
     pub valid_keys: &'a [&'a str],
 

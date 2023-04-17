@@ -1,5 +1,5 @@
 /*
- * options.rs
+ * arguments.rs
  *
  * wikidot-path - Library to parse Wikidot-like paths.
  * Copyright (c) 2019-2023 Emmie Maeda
@@ -11,27 +11,27 @@
  *
  */
 
-use super::schema::OptionSchema;
-use super::value::OptionValue;
+use super::schema::ArgumentSchema;
+use super::value::ArgumentValue;
 use std::collections::HashMap;
 
-pub type PageOptionsMap<'a> = HashMap<&'a str, OptionValue<'a>>;
+pub type PageArgumentsMap<'a> = HashMap<&'a str, ArgumentValue<'a>>;
 
-/// Represents the set of options for a page.
+/// Represents the set of arguments for a page.
 ///
 /// Within a Wikidot-compatible URL, this is the optional portion
 /// *after* a slug. For example:
 ///
-/// * `/scp-1000` -- No page options.
-/// * `/scp-1000/noredirect/true` -- Page options are `/noredirect/true`.
-/// * `/scp-1000/noredirect/true/norender/true` -- Page options are `/norender/true/noredirect/true`.
+/// * `/scp-1000` -- No page arguments.
+/// * `/scp-1000/noredirect/true` -- Page arguments are `/noredirect/true`.
+/// * `/scp-1000/noredirect/true/norender/true` -- Page arguments are `/norender/true/noredirect/true`.
 ///
 /// When passed as a string input, the leading `/` character is optional.
 #[derive(Debug, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize))]
-pub struct PageOptions<'a>(pub PageOptionsMap<'a>);
+pub struct PageArguments<'a>(pub PageArgumentsMap<'a>);
 
-impl<'a> PageOptions<'a> {
+impl<'a> PageArguments<'a> {
     /// Parse out Wikidot arguments.
     ///
     /// This algorithm is compatible with the `/KEY/true` format,
@@ -42,7 +42,7 @@ impl<'a> PageOptions<'a> {
     /// (i.e. null, boolean, or integer),
     ///
     /// If there are duplicate keys, the most recent one takes precedence.
-    pub fn parse(mut path: &'a str, schema: OptionSchema) -> Self {
+    pub fn parse(mut path: &'a str, schema: ArgumentSchema) -> Self {
         // Remove leading slash
         if path.starts_with('/') {
             path = &path[1..];
@@ -53,10 +53,10 @@ impl<'a> PageOptions<'a> {
         let mut parts = path.split('/');
 
         fn process_argument<'a>(
-            arguments: &mut PageOptionsMap<'a>,
+            arguments: &mut PageArgumentsMap<'a>,
             key: &'a str,
             parts: &mut dyn Iterator<Item = &'a str>,
-            schema: OptionSchema,
+            schema: ArgumentSchema,
         ) {
             let value = parts.next();
 
@@ -72,7 +72,7 @@ impl<'a> PageOptions<'a> {
                         // we will lose data, so we recursively call this function to
                         // handle it.
 
-                        arguments.insert(key, OptionValue::Null);
+                        arguments.insert(key, ArgumentValue::Null);
                         process_argument(arguments, value, parts, schema);
                         return;
                     }
@@ -80,7 +80,7 @@ impl<'a> PageOptions<'a> {
             }
 
             // Otherwise, return as normal key-value pair
-            arguments.insert(key, OptionValue::from(value));
+            arguments.insert(key, ArgumentValue::from(value));
         }
 
         while let Some(key) = parts.next() {
@@ -89,6 +89,6 @@ impl<'a> PageOptions<'a> {
             }
         }
 
-        PageOptions(arguments)
+        PageArguments(arguments)
     }
 }

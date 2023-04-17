@@ -17,7 +17,7 @@ use crate::prelude::*;
 fn test_option_value() {
     macro_rules! check {
         ($input:expr, $expected:expr $(,)?) => {{
-            let actual = OptionValue::from($input);
+            let actual = ArgumentValue::from($input);
 
             assert_eq!(
                 actual, $expected,
@@ -26,25 +26,25 @@ fn test_option_value() {
         }};
     }
 
-    check!("", OptionValue::Null);
-    check!("t", OptionValue::Boolean(true));
-    check!("f", OptionValue::Boolean(false));
-    check!("true", OptionValue::Boolean(true));
-    check!("false", OptionValue::Boolean(false));
-    check!("T", OptionValue::Boolean(true));
-    check!("F", OptionValue::Boolean(false));
-    check!("TRUE", OptionValue::Boolean(true));
-    check!("False", OptionValue::Boolean(false));
-    check!("1", OptionValue::Integer(1));
-    check!("-1", OptionValue::Integer(-1));
-    check!("9000", OptionValue::Integer(9000));
-    check!("alpha", OptionValue::String("alpha"));
-    check!("beta", OptionValue::String("beta"));
+    check!("", ArgumentValue::Null);
+    check!("t", ArgumentValue::Boolean(true));
+    check!("f", ArgumentValue::Boolean(false));
+    check!("true", ArgumentValue::Boolean(true));
+    check!("false", ArgumentValue::Boolean(false));
+    check!("T", ArgumentValue::Boolean(true));
+    check!("F", ArgumentValue::Boolean(false));
+    check!("TRUE", ArgumentValue::Boolean(true));
+    check!("False", ArgumentValue::Boolean(false));
+    check!("1", ArgumentValue::Integer(1));
+    check!("-1", ArgumentValue::Integer(-1));
+    check!("9000", ArgumentValue::Integer(9000));
+    check!("alpha", ArgumentValue::String("alpha"));
+    check!("beta", ArgumentValue::String("beta"));
 }
 
 #[test]
 fn test_options() {
-    const SCHEMA: OptionSchema = OptionSchema {
+    const SCHEMA: ArgumentSchema = ArgumentSchema {
         valid_keys: &[
             "edit",
             "comments",
@@ -59,7 +59,7 @@ fn test_options() {
 
     macro_rules! check {
         ($input:expr, $expected:expr $(,)?) => {{
-            let actual = PageOptions::parse($input, SCHEMA);
+            let actual = PageArguments::parse($input, SCHEMA);
 
             assert_eq!(
                 actual.0, $expected,
@@ -70,11 +70,11 @@ fn test_options() {
 
     macro_rules! o {
         () => {
-            OptionValue::Null
+            ArgumentValue::Null
         };
 
         ($value:expr $(,)?) => {
-            OptionValue::from($value)
+            ArgumentValue::from($value)
         };
     }
 

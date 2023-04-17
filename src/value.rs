@@ -20,7 +20,7 @@
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
 #[cfg_attr(feature = "serde-derive", derive(Serialize, Deserialize))]
 #[cfg_attr(feature = "serde-derive", serde(untagged))]
-pub enum OptionValue<'a> {
+pub enum ArgumentValue<'a> {
     /// A string argument value.
     String(&'a str),
 
@@ -35,24 +35,24 @@ pub enum OptionValue<'a> {
     Null,
 }
 
-impl<'a> From<Option<&'a str>> for OptionValue<'a> {
+impl<'a> From<Option<&'a str>> for ArgumentValue<'a> {
     #[inline]
     fn from(value: Option<&'a str>) -> Self {
         match value {
-            Some(value) => OptionValue::from(value),
-            None => OptionValue::Null,
+            Some(value) => ArgumentValue::from(value),
+            None => ArgumentValue::Null,
         }
     }
 }
 
-impl<'a> From<&'a str> for OptionValue<'a> {
+impl<'a> From<&'a str> for ArgumentValue<'a> {
     fn from(value: &'a str) -> Self {
-        const SPECIAL_VALUES: [(&str, OptionValue); 5] = [
-            ("", OptionValue::Null),
-            ("t", OptionValue::Boolean(true)),
-            ("f", OptionValue::Boolean(false)),
-            ("true", OptionValue::Boolean(true)),
-            ("false", OptionValue::Boolean(false)),
+        const SPECIAL_VALUES: [(&str, ArgumentValue); 5] = [
+            ("", ArgumentValue::Null),
+            ("t", ArgumentValue::Boolean(true)),
+            ("f", ArgumentValue::Boolean(false)),
+            ("true", ArgumentValue::Boolean(true)),
+            ("false", ArgumentValue::Boolean(false)),
         ];
 
         for (name, result) in &SPECIAL_VALUES {
@@ -62,29 +62,29 @@ impl<'a> From<&'a str> for OptionValue<'a> {
         }
 
         match value.parse::<i32>() {
-            Ok(int) => OptionValue::Integer(int),
-            Err(_) => OptionValue::String(value),
+            Ok(int) => ArgumentValue::Integer(int),
+            Err(_) => ArgumentValue::String(value),
         }
     }
 }
 
-impl From<bool> for OptionValue<'_> {
+impl From<bool> for ArgumentValue<'_> {
     #[inline]
     fn from(value: bool) -> Self {
-        OptionValue::Boolean(value)
+        ArgumentValue::Boolean(value)
     }
 }
 
-impl From<i32> for OptionValue<'_> {
+impl From<i32> for ArgumentValue<'_> {
     #[inline]
     fn from(value: i32) -> Self {
-        OptionValue::Integer(value)
+        ArgumentValue::Integer(value)
     }
 }
 
-impl From<()> for OptionValue<'_> {
+impl From<()> for ArgumentValue<'_> {
     #[inline]
     fn from(_: ()) -> Self {
-        OptionValue::Null
+        ArgumentValue::Null
     }
 }
