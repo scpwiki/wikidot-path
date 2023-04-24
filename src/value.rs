@@ -18,8 +18,6 @@
 /// `1`, `true`, and `Null` (as it indicates that they key is
 /// present at all) as meaning "true".
 #[derive(Debug, Copy, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde-derive", derive(Serialize, Deserialize))]
-#[cfg_attr(feature = "serde-derive", serde(untagged))]
 pub enum ArgumentValue<'a> {
     /// A string argument value.
     String(&'a str),

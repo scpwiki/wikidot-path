@@ -30,7 +30,6 @@ pub type PageArgumentsMap<'a> = HashMap<ArgumentKey<'a>, (ArgumentValue<'a>, &'a
 ///
 /// When passed as a string input, the leading `/` character is optional.
 #[derive(Debug, Clone, PartialEq, Eq)]
-#[cfg_attr(feature = "serde-derive", derive(Serialize))]
 pub struct PageArguments<'a>(pub PageArgumentsMap<'a>);
 
 impl<'a> PageArguments<'a> {

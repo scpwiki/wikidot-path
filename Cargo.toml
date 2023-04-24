@@ -10,12 +10,7 @@ version = "0.5.0"
 authors = ["Emmie Maeda <emmie.maeda@gmail.com>"]
 edition = "2021" # this refers to the Cargo.toml version
 
-[features]
-default = []
-serde-derive = ["serde"]
-
 [dependencies]
-serde = { version = "1", features = ["derive"], optional = true }
 unicase = "2"
 wikidot-normalize = "0.11"
 
