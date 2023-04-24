@@ -22,10 +22,6 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release
-      - uses: actions-rs/cargo@v1
-        with:
-          command: build
           args: --all-features --release
       - uses: actions-rs/cargo@v1
         with:
