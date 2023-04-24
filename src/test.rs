@@ -101,6 +101,7 @@ fn test_options() {
         "offset/4/norender/noredirect/",
         hashmap! {"offset" => o!(4), "norender" => o!(), "noredirect" => o!()},
     );
+    check!("offset/4/OFFSET/3", hashmap! {"offset" => o!(3)});
     check!(
         "edit/title/Foo",
         hashmap! {"edit" => o!(), "title" => o!("Foo")},
