@@ -64,7 +64,7 @@ fn test_options() {
             let actual: HashMap<&str, ArgumentValue> = PageArguments::parse($input, SCHEMA)
                 .0
                 .into_iter()
-                .map(|(key, (value, _))| (key, value))
+                .map(|(key, (value, _))| (key.into_inner(), value))
                 .collect();
 
             assert_eq!(

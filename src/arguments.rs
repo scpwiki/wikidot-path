@@ -14,8 +14,10 @@
 use super::schema::ArgumentSchema;
 use super::value::ArgumentValue;
 use std::collections::HashMap;
+use unicase::UniCase;
 
-pub type PageArgumentsMap<'a> = HashMap<&'a str, (ArgumentValue<'a>, &'a str)>;
+pub type ArgumentKey<'a> = UniCase<&'a str>;
+pub type PageArgumentsMap<'a> = HashMap<ArgumentKey<'a>, (ArgumentValue<'a>, &'a str)>;
 
 /// Represents the set of arguments for a page.
 ///
@@ -72,6 +74,7 @@ impl<'a> PageArguments<'a> {
                         // we will lose data, so we recursively call this function to
                         // handle it.
 
+                        let key = ArgumentKey::unicode(key);
                         arguments.insert(key, (ArgumentValue::Null, value));
                         process_argument(arguments, value, parts, schema);
                         return;
@@ -80,6 +83,7 @@ impl<'a> PageArguments<'a> {
             }
 
             // Otherwise, return as normal key-value pair
+            let key = ArgumentKey::unicode(key);
             arguments.insert(key, (ArgumentValue::from(value), value.unwrap_or("")));
         }
 
