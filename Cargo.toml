@@ -12,7 +12,7 @@ edition = "2021" # this refers to the Cargo.toml version
 
 [dependencies]
 unicase = "2"
-wikidot-normalize = "0.11"
+wikidot-normalize = "0"
 
 [dev-dependencies]
 maplit = "1"
